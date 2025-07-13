@@ -9,6 +9,7 @@ export default class userController {
     }
 
     async signUp(req, res, next){
+        console.log(req.body);
         const {name, email, password} = req.body;
 
         try{
@@ -58,7 +59,10 @@ export default class userController {
                     'AIb6d35fvJM4O9pXqXQNla2jBCH9kuLz',
                     {expiresIn: '30d',}
                 );
-                return res.status(200).json({message: 'User logged in successfully', token});
+                // Remove password from user object before sending
+                const { password, ...userWithoutPassword } = user._doc;
+
+                return res.status(200).json({message: 'User logged in successfully', token, user: userWithoutPassword, });
             }else{
                 return res.status(401).json({message: 'Invalid email or password..'});
             }

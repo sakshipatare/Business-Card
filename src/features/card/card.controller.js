@@ -17,6 +17,21 @@ export default class CardController {
     }
   }
 
+  async getByEmail(req, res) {
+  try {
+    const { email } = req.params;
+    const card = await this.cardRepository.getByEmail(email);
+    if (!card) {
+      return res.status(404).send("Card not found");
+    }
+    res.status(200).send(card);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error fetching card");
+  }
+}
+
+
   async getbyId(req, res) {
     try {
       const { id } = req.params;

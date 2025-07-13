@@ -15,6 +15,17 @@ export default class CardRepository {
     }
   }
 
+  async getByEmail(email) {
+  try {
+    const card = await CardModel.findOne({ email });
+    return card;
+  } catch (err) {
+    console.error(err);
+    throw new Error("Error fetching card by email");
+  }
+}
+
+
   async getByID(id) {
   try {
     // optional: validate id is number

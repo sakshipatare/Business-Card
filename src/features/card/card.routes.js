@@ -9,13 +9,18 @@ cardRouter.get('/', (req, res) => {
   cardController.getAllDetails(req, res);
 });
 
+// ⚠️ Add this line BEFORE `/:id` route
+cardRouter.get('/email/:email', (req, res) => {
+  cardController.getByEmail(req, res);
+});
+
 // Get card by ID
 cardRouter.get('/:id', (req, res) => {
   cardController.getbyId(req, res);
 });
 
 // Add new card
-cardRouter.post('/', (req, res) => {
+cardRouter.post('/add', (req, res) => {
   cardController.addToCard(req, res);
 });
 
