@@ -19,7 +19,7 @@ userRouter.get('/verify/:token', async (req, res) => {
     const { token } = req.params;
 
     try {
-        const { email } = jwt.verify(token, 'secret_token_key'); // Match the secret used in signUp
+        const { email } = jwt.verify(token, process.env.JWT_SECRET); // Match the secret used in signUp
         const user = await userModel.findOne({ email });
 
         if (!user) return res.status(400).send('User not found');
@@ -35,5 +35,10 @@ userRouter.get('/verify/:token', async (req, res) => {
         return res.status(400).send('❌ Invalid or expired token');
     }
 });
+
+userRouter.get('/test', (req, res) => {
+  res.send("Backend is connected");
+});
+
 
 export default userRouter;

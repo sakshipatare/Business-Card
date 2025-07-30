@@ -24,7 +24,7 @@ export default class userController {
             await this.userRepo.signUp(user);
 
             // Generate a verification token
-            const token = jwt.sign({ email }, "secret_token_key", { expiresIn: "1h" });
+            const token = jwt.sign({ email }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
             // Send email
             await sendVerificationEmail(email, token);
@@ -56,7 +56,7 @@ export default class userController {
             if(isValidPassword){
                 const token = jwt.sign(
                     {email: user.email, id: user.id},
-                    'AIb6d35fvJM4O9pXqXQNla2jBCH9kuLz',
+                    process.env.JWT_SECRET,
                     {expiresIn: '30d',}
                 );
                 // Remove password from user object before sending
